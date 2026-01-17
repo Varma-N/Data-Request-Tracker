@@ -86,3 +86,45 @@ button:hover {
     margin-left: 5px;
     font-size: 0.85em;
 }
+
+/* Priority badges */
+.priority-badge {
+    float: right;
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.priority-low { background: #c8e6c9; color: #2e7d32; }     /* Green */
+.priority-medium { background: #ffcc80; color: #e65100; }   /* Orange */
+.priority-high { background: #ffcdd2; color: #c62828; }     /* Red */
+
+/* Request card structure */
+.request-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: block;
+}
+.request-description-label {
+    font-weight: bold;
+    margin-top: 8px;
+    display: block;
+    color: #555;
+}
+.request-description {
+    margin-top: 4px;
+    color: #333;
+}
+
+/* Hover effect for action buttons */
+.action-buttons button {
+    opacity: 0.7;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+.action-buttons button:hover {
+    opacity: 1;
+    background-color: #45a049;
+    color: white;
+}

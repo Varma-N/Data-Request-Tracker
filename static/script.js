@@ -49,7 +49,7 @@ async function loadRequests() {
     const res = await fetch('/api/requests');
     const requests = await res.json();
 
-    const filtered = requests.filter(req => 
+    const filtered = requests.filter(req =>
         currentFilter === 'open' ? isRequestOpen(req.status) : !isRequestOpen(req.status)
     );
 
@@ -60,28 +60,36 @@ async function loadRequests() {
     }
 
     listDiv.innerHTML = filtered.map(req => {
+        // Priority badge
+        let priorityClass = '';
+        if (req.priority === 'High') priorityClass = 'priority-high';
+        else if (req.priority === 'Medium') priorityClass = 'priority-medium';
+        else priorityClass = 'priority-low';
+
         let actions = '';
         if (req.status === 'Submitted') {
             actions = `
-                <button onclick="updateStatus(${req.id}, 'Accepted')">Accept</button>
-                <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
-            `;
+            <button onclick="updateStatus(${req.id}, 'Accepted')">Accept</button>
+            <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
+        `;
         } else if (req.status === 'Accepted') {
             actions = `<button onclick="updateStatus(${req.id}, 'Completed')">Mark Complete</button>`;
         }
 
         return `
-            <div class="request-card">
-                <strong>${req.title}</strong>
-                <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}" 
-                      title="${req.priority} priority">
-                    ${req.status}
-                </span>
-                <br><small>${req.description}</small><br>
-                <em>${new Date(req.created_at).toLocaleString()}</em>
-                ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
-            </div>
-        `;
+        <div class="request-card">
+            <span class="request-title">${req.title}</span>
+            <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}"> ${req.status} </span>
+            <span class="priority-badge ${priorityClass}">${req.priority}</span>
+            
+            <span class="request-description-label">Description:</span>
+            <div class="request-description">${req.description}</div>
+            
+            <em>${new Date(req.created_at).toLocaleString()}</em>
+            
+            ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
+        </div>
+    `;
     }).join('');
 }
 
