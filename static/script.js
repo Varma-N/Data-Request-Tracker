@@ -32,7 +32,7 @@ async function updateStatus(id, status) {
 
 function filterRequests(filter) {
     currentFilter = filter;
-    document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active-tab'));
+    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active-tab'));
     if (filter === 'open') {
         document.getElementById('tab-open').classList.add('active-tab');
     } else {
@@ -49,7 +49,7 @@ async function loadRequests() {
     const res = await fetch('/api/requests');
     const requests = await res.json();
 
-    const filtered = requests.filter(req => 
+    const filtered = requests.filter(req =>
         currentFilter === 'open' ? isRequestOpen(req.status) : !isRequestOpen(req.status)
     );
 
@@ -60,28 +60,55 @@ async function loadRequests() {
     }
 
     listDiv.innerHTML = filtered.map(req => {
+        // Priority badge
+        let priorityClass = '';
+        if (req.priority === 'High') priorityClass = 'priority-high';
+        else if (req.priority === 'Medium') priorityClass = 'priority-medium';
+        else priorityClass = 'priority-low';
+
         let actions = '';
         if (req.status === 'Submitted') {
             actions = `
-                <button onclick="updateStatus(${req.id}, 'Accepted')">Accept</button>
-                <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
-            `;
+            <button onclick="updateStatus(${req.id}, 'Accepted')">Accept</button>
+            <button onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
+        `;
         } else if (req.status === 'Accepted') {
             actions = `<button onclick="updateStatus(${req.id}, 'Completed')">Mark Complete</button>`;
         }
 
         return `
-            <div class="request-card">
-                <strong>${req.title}</strong>
-                <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}" 
-                      title="${req.priority} priority">
-                    ${req.status}
-                </span>
-                <br><small>${req.description}</small><br>
-                <em>${new Date(req.created_at).toLocaleString()}</em>
-                ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
+        <article class="request-card">
+            <header class="card-header">
+                <div class="header-main">
+                    <h3 class="card-title">${req.title}</h3>
+                    <div class="card-badges">
+                        <span class="priority-badge ${priorityClass}">${req.priority}</span>
+                        <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}">${req.status}</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="card-body">
+                <div class="description-section">
+                    <span class="meta-label">Description</span>
+                    <p class="description-text">${req.description}</p>
+                </div>
             </div>
-        `;
+            
+            <footer class="card-footer">
+                <div class="meta-info">
+                    <span class="timestamp">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        ${new Date(req.created_at).toLocaleString()}
+                    </span>
+                </div>
+                ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
+            </footer>
+        </article>
+    `;
     }).join('');
 }
 
