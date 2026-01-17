@@ -1,111 +1,234 @@
+:root {
+    /* Color System */
+    --primary-color: #2e7d32;
+    --primary-hover: #1b5e20;
+    --primary-light: #e8f5e9;
+    
+    --secondary-color: #e65100;
+    --secondary-bg: #fff3e0;
+    
+    --danger-color: #c62828;
+    --danger-bg: #ffebee;
+    
+    --text-main: #1a1a1a;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    
+    --bg-app: #f5f7fa;
+    --bg-surface: #ffffff;
+    
+    --border-color: #e0e0e0;
+    --focus-ring: rgba(46, 125, 50, 0.4);
+
+    /* Typography */
+    --font-heading: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-body: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    
+    /* Spacing Scale */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* Components */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fa;
+    font-family: var(--font-body);
+    background: var(--bg-app);
+    color: var(--text-main);
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
 }
-.container {
-    max-width: 800px;
+
+/* App Layout - Sidebar + Main */
+.app-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
+
+.sidebar {
+    width: 280px;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border-color);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: var(--space-xl);
+    overflow-y: auto;
+}
+
+/* Responsive Sidebar Toggle for Mobile would go here */
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; border-bottom: 1px solid var(--border-color); border-right: none; }
+    .main-content { padding: var(--space-md); }
+}
+
+/* Typography Enhancements */
+h1 { font-size: 1.75rem; color: var(--text-main); margin-bottom: var(--space-lg); font-weight: 700; }
+h2 { font-size: 1.25rem; color: var(--text-main); margin-bottom: var(--space-md); }
+
+/* --- Existing Styles Refined --- */
+
+/* Form Elements */
 input, textarea, select {
     width: 100%;
     padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background: #fff;
-    box-sizing: border-box; /* Ensure padding doesn't overflow width */
+    margin: 0 0 var(--space-md) 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    box-sizing: border-box;
+    font-family: var(--font-body);
     font-size: 14px;
-    transition: border-color 0.3s;
+    transition: all 0.2s ease;
 }
 
 input:focus, textarea:focus, select:focus {
-    border-color: #2e7d32;
+    border-color: var(--primary-color);
     outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 button {
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: var(--space-sm) 0;
     border: none;
-    border-radius: 6px;
-    background: #2e7d32;
+    border-radius: var(--radius-md);
+    background: var(--primary-color);
     color: white;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 button:hover {
-    background: #1b5e20;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
-.request-card {
-    border: 1px solid #ddd;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 4px;
-    background: #fafafa;
+
+/* --- Sidebar Navigation --- */
+.brand h2 {
+    color: var(--primary-color);
+    margin: 0 0 var(--space-xl) 0;
+    font-size: 1.5rem;
 }
-.status-submitted { color: #888; }
-.status-accepted { color: green; }
-.status-rejected { color: red; }
 
-/* ... previous styles ... */
+.nav-menu {
+    flex: 1;
+}
 
-/* Professional Tabs */
-.tabs {
-    margin: 30px 0 20px;
+.tabs-vertical {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding-bottom: 5px;
+    flex-direction: column;
+    gap: var(--space-sm);
 }
-.tabs button {
-    width: auto;
-    min-width: 150px;
-    padding: 10px 24px;
-    border: 2px solid transparent;
-    background: #f5f5f5;
-    color: #666;
-    cursor: pointer;
-    margin-right: 0;
-    border-radius: 50px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 14px;
+
+.nav-item {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     box-shadow: none;
-    transition: all 0.3s ease;
+    font-weight: 500;
 }
-.tabs button:hover {
-    background: #e0e0e0;
-    color: #444;
+
+.nav-item:hover {
+    background: var(--bg-app);
     transform: none;
+    color: var(--primary-color);
     box-shadow: none;
 }
-.tabs button.active-tab {
-    background: #2e7d32;
-    color: white;
-    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+
+.nav-item.active-tab {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 700;
 }
-.tabs button.active-tab:hover {
-    background: #1b5e20;
+
+.nav-item .icon {
+    font-size: 1.2em;
 }
+
+.sidebar-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-md);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- Form Section --- */
+.request-form-section {
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-xl);
+    border: 1px solid var(--border-color);
+}
+
+.request-form-section h3 {
+    margin-top: 0;
+    color: var(--text-main);
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
+    display: inline-block;
+}
+
+.form-row {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+}
+
+.form-row select {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-row button {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 12px 24px;
+    margin: 0;
+}
+
 /* Modern Request Card */
 .request-card {
     border: 1px solid #e0e0e0;

@@ -9,27 +9,60 @@
     <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Data Analytics Request Tracker</h1>
+    <div class="app-layout">
+        <!-- Sidebar: Navigation & Filters -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>Data Tracker</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="tabs-vertical"> <!-- Changed to vertical tabs for sidebar -->
+                    <button id="tab-open" class="nav-item active-tab" onclick="filterRequests('open')">
+                        <span class="icon">📂</span> Open Requests
+                    </button>
+                    <button id="tab-closed" class="nav-item" onclick="filterRequests('closed')">
+                        <span class="icon">✔️</span> Closed Requests
+                    </button>
+                </div>
+            </nav>
 
-        <form id="requestForm">
-            <input type="text" id="title" placeholder="Request title (e.g., Weekly Sales Report)" required />
-            <textarea id="description" placeholder="Describe what data you need and why..." required></textarea>
-            <select id="priority">
-                <option value="Low">Low</option>
-                <option value="Medium" selected>Medium</option>
-                <option value="High">High</option>
-            </select>
-            <button type="submit">Submit Request</button>
-        </form>
+            <div class="sidebar-footer">
+                <p>Logged in as Analyst</p>
+            </div>
+        </aside>
 
-        <!-- Tabs for Open / Closed -->
-        <div class="tabs">
-            <button id="tab-open" class="active-tab" onclick="filterRequests('open')">Open Requests</button>
-            <button id="tab-closed" onclick="filterRequests('closed')">Closed Requests</button>
-        </div>
+        <!-- Main Content: Form & List -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1>Request Management</h1>
+            </div>
 
-        <div id="requestsList"></div>
+            <!-- Request Form Section -->
+            <section class="request-form-section">
+                <h3>Submit New Request</h3>
+                <form id="requestForm">
+                    <input type="text" id="title" placeholder="Request title (e.g., Weekly Sales Report)" required aria-label="Request Title"/>
+                    <textarea id="description" placeholder="Describe what data you need and why..." required aria-label="Description" rows="4"></textarea>
+                    
+                    <div class="form-row">
+                        <select id="priority" aria-label="Priority">
+                            <option value="Low">Low Priority</option>
+                            <option value="Medium" selected>Medium Priority</option>
+                            <option value="High">High Priority</option>
+                        </select>
+                        <button type="submit" class="btn-primary">Submit Request</button>
+                    </div>
+                </form>
+            </section>
+
+            <hr class="divider"/>
+
+            <!-- Request List -->
+            <section id="results-area">
+                <div id="requestsList"></div>
+            </section>
+        </main>
     </div>
 
     <script src="/static/script.js"></script>

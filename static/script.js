@@ -32,7 +32,7 @@ async function updateStatus(id, status) {
 
 function filterRequests(filter) {
     currentFilter = filter;
-    document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active-tab'));
+    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active-tab'));
     if (filter === 'open') {
         document.getElementById('tab-open').classList.add('active-tab');
     } else {
