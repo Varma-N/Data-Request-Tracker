@@ -106,75 +106,143 @@ button:active {
 .tabs button.active-tab:hover {
     background: #1b5e20;
 }
+/* Modern Request Card */
 .request-card {
-    border: 1px solid #ddd;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    padding: 0; /* Let children handle padding */
+    margin: 16px 0;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.request-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Card Header */
+.card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
     background: #fafafa;
-    position: relative;
 }
-.status-badge {
-    float: right;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.8em;
-    font-weight: bold;
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap; /* Responsive wrap */
 }
+
+.card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    flex: 1;
+    min-width: 200px;
+}
+
+.card-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Redefine Badges to not float and improve look */
+.status-badge, .priority-badge {
+    float: none; /* Reset partial float logic */
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0;
+    white-space: nowrap;
+}
+
 .status-submitted { background: #e0e0e0; color: #555; }
 .status-under-review { background: #bbdefb; color: #0d47a1; }
 .status-accepted { background: #c8e6c9; color: #2e7d32; }
 .status-rejected { background: #ffcdd2; color: #c62828; }
 .status-completed { background: #a5d6a7; color: #1b5e20; }
 
+.priority-low { background: #e8f5e9; color: #2e7d32; }     
+.priority-medium { background: #fff3e0; color: #e65100; }   
+.priority-high { background: #ffebee; color: #c62828; }    
+
+/* Card Body */
+.card-body {
+    padding: 20px;
+}
+
+.meta-label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: #666;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.description-text {
+    margin: 0;
+    color: #333;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Card Footer */
+.card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.meta-info {
+    display: flex;
+    align-items: center;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.timestamp {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .action-buttons {
-    margin-top: 8px;
+    margin: 0;
+    /* Reset previous styles */
     text-align: right;
 }
+
 .action-buttons button {
     width: auto;
-    padding: 4px 8px;
-    margin-left: 5px;
-    font-size: 0.85em;
+    display: inline-block;
+    padding: 6px 14px;
+    margin: 0 0 0 8px;
+    font-size: 0.85rem;
+    box-shadow: none;
+    opacity: 0.9;
 }
 
-/* Priority badges */
-.priority-badge {
-    float: right;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.75em;
-    font-weight: bold;
-    margin-right: 5px;
-}
-.priority-low { background: #c8e6c9; color: #2e7d32; }     /* Green */
-.priority-medium { background: #ffcc80; color: #e65100; }   /* Orange */
-.priority-high { background: #ffcdd2; color: #c62828; }     /* Red */
-
-/* Request card structure */
-.request-title {
-    font-weight: bold;
-    margin-bottom: 4px;
-    display: block;
-}
-.request-description-label {
-    font-weight: bold;
-    margin-top: 8px;
-    display: block;
-    color: #555;
-}
-.request-description {
-    margin-top: 4px;
-    color: #333;
-}
-
-/* Hover effect for action buttons */
-.action-buttons button {
-    opacity: 0.7;
-    transition: opacity 0.2s, background-color 0.2s;
-}
 .action-buttons button:hover {
     opacity: 1;
-    background-color: #45a049;
-    color: white;
+    transform: none;
 }

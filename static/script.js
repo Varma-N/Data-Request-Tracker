@@ -77,18 +77,37 @@ async function loadRequests() {
         }
 
         return `
-        <div class="request-card">
-            <span class="request-title">${req.title}</span>
-            <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}"> ${req.status} </span>
-            <span class="priority-badge ${priorityClass}">${req.priority}</span>
+        <article class="request-card">
+            <header class="card-header">
+                <div class="header-main">
+                    <h3 class="card-title">${req.title}</h3>
+                    <div class="card-badges">
+                        <span class="priority-badge ${priorityClass}">${req.priority}</span>
+                        <span class="status-badge status-${req.status.toLowerCase().replace(' ', '-')}">${req.status}</span>
+                    </div>
+                </div>
+            </header>
             
-            <span class="request-description-label">Description:</span>
-            <div class="request-description">${req.description}</div>
+            <div class="card-body">
+                <div class="description-section">
+                    <span class="meta-label">Description</span>
+                    <p class="description-text">${req.description}</p>
+                </div>
+            </div>
             
-            <em>${new Date(req.created_at).toLocaleString()}</em>
-            
-            ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
-        </div>
+            <footer class="card-footer">
+                <div class="meta-info">
+                    <span class="timestamp">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        ${new Date(req.created_at).toLocaleString()}
+                    </span>
+                </div>
+                ${actions ? `<div class="action-buttons">${actions}</div>` : ''}
+            </footer>
+        </article>
     `;
     }).join('');
 }
