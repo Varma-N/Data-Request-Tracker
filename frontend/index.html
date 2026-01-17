@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="refresh" content="30"> <!-- Optional: auto-refresh -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Data Request Tracker</title>
+    <!-- Load CSS from static folder (works in Flask and direct file open) -->
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Data Analytics Request Tracker</h1>
+
+        <form id="requestForm">
+            <input type="text" id="title" placeholder="Request title (e.g., Weekly Sales Report)" required />
+            <textarea id="description" placeholder="Describe what data you need and why..." required></textarea>
+            <select id="priority">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button type="submit">Submit Request</button>
+        </form>
+
+        <!-- Tabs for Open / Closed -->
+        <div class="tabs">
+            <button id="tab-open" class="active-tab" onclick="filterRequests('open')">Open Requests</button>
+            <button id="tab-closed" onclick="filterRequests('closed')">Closed Requests</button>
+        </div>
+
+        <div id="requestsList"></div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
